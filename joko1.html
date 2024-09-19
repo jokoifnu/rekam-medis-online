@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekam Medis Pasien</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #e9ecef;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            margin-top: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #343a40;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn {
+            margin-top: 10px;
+        }
+        .icon {
+            margin-right: 5px;
+        }
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+        .obat-search {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Rekam Medis</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+
+<div class="container">
+    <h1 class="text-center">RUMAH SAKIT FAJAR MEDIKA</h1>
+    <h2 class="text-center">Pencatatan Rekam Medis Pasien</h2>
+    
+    <form id="rekamMedisForm" class="mb-4">
+        <div class="form-group">
+            <label for="nama">Nama Pasien:</label>
+            <input type="text" id="nama" name="nama" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="umur">Umur:</label>
+            <input type="number" id="umur" name="umur" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="jenisKelamin">Jenis Kelamin:</label>
+            <select id="jenisKelamin" name="jenisKelamin" class="form-control" required>
+                <option value="Laki-laki">Laki-laki</option>
+                <option value="Perempuan">Perempuan</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="diagnosis">Diagnosis:</label>
+            <textarea id="diagnosis" name="diagnosis" class="form-control" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="pemeriksaanPenunjang">Hasil Pemeriksaan Penunjang:</label>
+            <textarea id="pemeriksaanPenunjang" name="pemeriksaanPenunjang" class="form-control" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="alergi">Alergi:</label>
+            <input type="text" id="alergi" name="alergi" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="catatanDokter">Catatan Dokter:</label>
+            <textarea id="catatanDokter" name="catatanDokter" class="form-control" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="tanggal">Tanggal Pemeriksaan:</label>
+            <input type="date" id="tanggal" name="tanggal" class="form-control" required>
+        </div>
+
+        <div class="form-group obat-search">
+            <label for="obat">Obat yang Diberikan:</label>
+            <input type="text" id="obatSearch" class="form-control" placeholder="Cari Obat..." onkeyup="searchObat()">
+            <ul id="obatList" class="list-group mt-2"></ul>
+        </div>
+
+        <div class="form-group">
+            <label for="dosis">Dosis Obat:</label>
+            <select id="dosis" class="form-control" disabled>
+                <option value="">Pilih Dosis</option>
+                <option value="500 mg">500 mg</option>
+                <option value="1 g">1 g</option>
+                <option value="10 mg">10 mg</option>
+                <option value="250 mg">250 mg</option>
+                <option value="5 mg">5 mg</option>
+                <option value="50 mg">50 mg</option>
+                <option value="100 mg">100 mg</option>
+                <option value="200 mg">200 mg</option>
+                <!-- Dosis lain bisa ditambahkan di sini -->
+            </select>
+        </div>
+
+        <button type="button" class="btn btn-primary" id="simpanButton" onclick="tambahRekamMedis()">
+            <i class="fas fa-save icon"></i> Simpan Rekam Medis
+        </button>
+    </form>
+
+    <h2 class="mt-5">Daftar Rekam Medis Pasien</h2>
+    <table class="table table-striped" id="rekamMedisTable">
+        <thead>
+            <tr>
+                <th>Nama Pasien</th>
+                <th>Umur</th>
+                <th>Jenis Kelamin</th>
+                <th>Tanggal Pemeriksaan</th>
+                <th>Diagnosis</th>
+                <th>Hasil Pemeriksaan</th>
+                <th>Alergi</th>
+                <th>Catatan Dokter</th>
+                <th>Obat</th>
+                <th>Dosis</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data rekam medis akan ditambahkan di sini -->
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <p>Created by Joko Ifnu Fajar</p>
+    <p>Copyright by Fajar Digital IT Solution</p>
+</footer>
+
+<script>
+    const rekamMedisData = JSON.parse(localStorage.getItem('rekamMedisData')) || [];
+    const daftarObat = [
+        { name: "Paracetamol", brand: "Panadol" },
+        { name: "Ibuprofen", brand: "Brufen" },
+        { name: "Amoxicillin", brand: "Amoxan" },
+        { name: "Ciprofloxacin", brand: "Cipro" },
+        { name: "Azithromycin", brand: "Zithromax" },
+        { name: "Doxycycline", brand: "Vibramycin" },
+        { name: "Metronidazole", brand: "Flagyl" },
+        { name: "Fluoxetine", brand: "Prozac" },
+        { name: "Sertraline", brand: "Zoloft" },
+        { name: "Amoxicillin/Clavulanate", brand: "Augmentin" },
+        { name: "Moxifloxacin", brand: "Avelox" },
+        { name: "Levofloxacin", brand: "Levaquin" },
+        { name: "Simvastatin", brand: "Zocor" },
+        { name: "Amlodipine", brand: "Amlodin" },
+        { name: "Lisinopril", brand: "Lisinopril" },
+        { name: "Omeprazole", brand: "Losec" },
+        { name: "Quetiapine", brand: "Seroquel" },
+        { name: "Lithium", brand: "Lithobid" },
+        { name: "Citalopram", brand: "Celexa" },
+        { name: "Escitalopram", brand: "Lexapro" },
+        { name: "Metformin", brand: "Glucophage" },
+        { name: "Atorvastatin", brand: "Lipitor" },
+        { name: "Gliclazide", brand: "Diamicron" },
+        { name: "Furosemide", brand: "Lasix" },
+        { name: "Hydrochlorothiazide", brand: "Hydrodiuril" },
+        { name: "Sildenafil", brand: "Viagra" },
+        { name: "Tamsulosin", brand: "Flomax" },
+        { name: "Duloxetine", brand: "Cymbalta" },
+        { name: "Amitriptyline", brand: "Elavil" },
+        { name: "Clonazepam", brand: "Klonopin" },
+        { name: "Diazepam", brand: "Valium" },
+        { name: "Lorazepam", brand: "Ativan" },
+        { name: "Clopidogrel", brand: "Plavix" },
+        { name: "Warfarin", brand: "Coumadin" },
+        { name: "Enoxaparin", brand: "Lovenox" },
+        { name: "Rivaroxaban", brand: "Xarelto" },
+        { name: "Dexamethasone", brand: "Decadron" },
+        { name: "Prednisone", brand: "Deltasone" },
+        { name: "Hydrocodone", brand: "Vicodin" },
+        { name: "Oxycodone", brand: "OxyContin" },
+        { name: "Tramadol", brand: "Ultram" },
+        { name: "Codeine", brand: "Tylenol #3" },
+        { name: "Cetirizine", brand: "Zyrtec" },
+        { name: "Diphenhydramine", brand: "Benadryl" },
+        { name: "Loratadine", brand: "Claritin" },
+        // Tambahkan lebih banyak obat di sini sesuai kebutuhan
+    ];
+
+    function searchObat() {
+        const query = document.getElementById('obatSearch').value.toLowerCase();
+        const obatListElement = document.getElementById('obatList');
+        obatListElement.innerHTML = '';
+
+        const filteredObat = daftarObat.filter(obat => obat.name.toLowerCase().includes(query));
+        filteredObat.forEach(obat => {
+            const li = document.createElement('li');
+            li.className = 'list-group-item';
+            li.textContent = `${obat.name} (${obat.brand})`;
+            li.onclick = () => selectObat(obat.name);
+            obatListElement.appendChild(li);
+        });
+    }
+
+    function selectObat(obatName) {
+        document.getElementById('obatSearch').value = obatName;
+        document.getElementById('dosis').disabled = false;
+        document.getElementById('obatList').innerHTML = '';
+    }
+
+    function renderTable() {
+        const Body = document.getElementById('rekamMedisTable').getElementsByTagName('tbody')[0];
+        Body.innerHTML = '';
+        rekamMedisData.forEach((data, index) => {
+            const newRow = Body.insertRow();
+            newRow.insertCell(0).innerText = data.nama;
+            newRow.insertCell(1).innerText = data.umur;
+            newRow.insertCell(2).innerText = data.jenisKelamin;
+            newRow.insertCell(3).innerText = data.tanggal;
+            newRow.insertCell(4).innerText = data.diagnosis;
+            newRow.insertCell(5).innerText = data.pemeriksaanPenunjang || 'Tidak Ada';
+            newRow.insertCell(6).innerText = data.alergi || 'Tidak Ada';
+            newRow.insertCell(7).innerText = data.catatanDokter || 'Tidak Ada';
+            newRow.insertCell(8).innerText = data.obat.join(', ') || 'Tidak Ada';
+            newRow.insertCell(9).innerText = data.dosis.join(', ') || 'Tidak Ada';
+            const editCell = newRow.insertCell(10);
+            editCell.innerHTML = `<button class="btn btn-warning" onclick="editRekamMedis(${index})">Edit</button>`;
+        });
+    }
+
+    function tambahRekamMedis() {
+        const nama = document.getElementById('nama').value;
+        const umur = document.getElementById('umur').value;
+        const jenisKelamin = document.getElementById('jenisKelamin').value;
+        const diagnosis = document.getElementById('diagnosis').value;
+        const pemeriksaanPenunjang = document.getElementById('pemeriksaanPenunjang').value;
+        const alergi = document.getElementById('alergi').value;
+        const catatanDokter = document.getElementById('catatanDokter').value;
+        const tanggal = document.getElementById('tanggal').value;
+        const obat = [document.getElementById('obatSearch').value];
+        const dosis = [document.getElementById('dosis').value];
+
+        const newRecord = { nama, umur, jenisKelamin, diagnosis, pemeriksaanPenunjang, alergi, catatanDokter, tanggal, obat, dosis };
+        rekamMedisData.push(newRecord);
+        localStorage.setItem('rekamMedisData', JSON.stringify(rekamMedisData));
+        renderTable();
+        document.getElementById('rekamMedisForm').reset();
+        document.getElementById('obatList').innerHTML = '';
+        document.getElementById('dosis').value = '';
+        document.getElementById('dosis').disabled = true;
+    }
+
+    function editRekamMedis(index) {
+        const data = rekamMedisData[index];
+        document.getElementById('nama').value = data.nama;
+        document.getElementById('umur').value = data.umur;
+        document.getElementById('jenisKelamin').value = data.jenisKelamin;
+        document.getElementById('diagnosis').value = data.diagnosis;
+        document.getElementById('pemeriksaanPenunjang').value = data.pemeriksaanPenunjang;
+        document.getElementById('alergi').value = data.alergi;
+        document.getElementById('catatanDokter').value = data.catatanDokter;
+        document.getElementById('tanggal').value = data.tanggal;
+
+        const obat = data.obat.join(', ');
+        document.getElementById('obatSearch').value = obat;
+        document.getElementById('obatList').innerHTML = '';
+
+        const dosis = data.dosis.join(', ');
+        document.getElementById('dosis').value = dosis;
+    }
+
+    renderTable();
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
