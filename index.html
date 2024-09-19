@@ -158,214 +158,170 @@
 <script>
     const rekamMedisData = JSON.parse(localStorage.getItem('rekamMedisData')) || {};
     const daftarObat = [
-    { name: "Paracetamol", brand: "Panadol", dosis: ["500 mg", "1 g"] },
-    { name: "Ibuprofen", brand: "Brufen", dosis: ["200 mg", "400 mg"] },
-    { name: "Amoxicillin", brand: "Amoxan", dosis: ["250 mg", "500 mg"] },
-    { name: "Ciprofloxacin", brand: "Cipro", dosis: ["250 mg", "500 mg"] },
-    { name: "Aspirin", brand: "Bayer", dosis: ["100 mg", "500 mg"] },
-    { name: "Metformin", brand: "Glucophage", dosis: ["500 mg", "850 mg", "1000 mg"] },
-    { name: "Lisinopril", brand: "Zestril", dosis: ["10 mg", "20 mg", "40 mg"] },
-    { name: "Simvastatin", brand: "Zocor", dosis: ["5 mg", "10 mg", "20 mg", "40 mg"] },
-    { name: "Cetirizine", brand: "Zyrtec", dosis: ["10 mg"] },
-    { name: "Omeprazole", brand: "Prilosec", dosis: ["20 mg", "40 mg"] },
-    { name: "Hydrochlorothiazide", brand: "HydroDiuril", dosis: ["12.5 mg", "25 mg"] },
-    { name: "Furosemide", brand: "Lasix", dosis: ["20 mg", "40 mg", "80 mg"] },
-    { name: "Levothyroxine", brand: "Synthroid", dosis: ["25 mcg", "50 mcg", "100 mcg"] },
-    { name: "Albuterol", brand: "Ventolin", dosis: ["90 mcg"] },
-    { name: "Fluticasone", brand: "Flonase", dosis: ["50 mcg"] },
-    { name: "Dexamethasone", brand: "Decadron", dosis: ["0.5 mg", "1 mg", "4 mg"] },
-    { name: "Sertraline", brand: "Zoloft", dosis: ["50 mg", "100 mg"] },
-    { name: "Amlodipine", brand: "Norvasc", dosis: ["2.5 mg", "5 mg", "10 mg"] },
-    { name: "Atorvastatin", brand: "Lipitor", dosis: ["10 mg", "20 mg", "40 mg", "80 mg"] },
-    { name: "Warfarin", brand: "Coumadin", dosis: ["1 mg", "5 mg"] },
-    { name: "Clopidogrel", brand: "Plavix", dosis: ["75 mg"] },
-    { name: "Rivaroxaban", brand: "Xarelto", dosis: ["10 mg", "15 mg", "20 mg"] },
-    { name: "Duloxetine", brand: "Cymbalta", dosis: ["30 mg", "60 mg"] },
-    { name: "Tamsulosin", brand: "Flomax", dosis: ["0.4 mg"] },
-    { name: "Metoprolol", brand: "Lopressor", dosis: ["25 mg", "50 mg", "100 mg"] },
-    { name: "Esomeprazole", brand: "Nexium", dosis: ["20 mg", "40 mg"] },
-    { name: "Tramadol", brand: "Ultram", dosis: ["50 mg", "100 mg"] },
-    { name: "Gabapentin", brand: "Neurontin", dosis: ["100 mg", "300 mg", "600 mg"] },
-    { name: "Fluoxetine", brand: "Prozac", dosis: ["20 mg", "40 mg"] },
-    { name: "Lorazepam", brand: "Ativan", dosis: ["0.5 mg", "1 mg", "2 mg"] },
-    { name: "Diazepam", brand: "Valium", dosis: ["2 mg", "5 mg", "10 mg"] },
-    { name: "Amiodarone", brand: "Cordarone", dosis: ["100 mg", "200 mg"] },
-    { name: "Adenosine", brand: "Adenocard", dosis: ["6 mg", "12 mg"] },
-    { name: "Clindamycin", brand: "Cleocin", dosis: ["150 mg", "300 mg"] },
-    { name: "Azithromycin", brand: "Zithromax", dosis: ["250 mg", "500 mg"] },
-    { name: "Vancomycin", brand: "Vancocin", dosis: ["500 mg", "1 g"] },
-    { name: "Metronidazole", brand: "Flagyl", dosis: ["250 mg", "500 mg"] },
-    { name: "Doxycycline", brand: "Vibramycin", dosis: ["100 mg"] },
-    { name: "Ceftriaxone", brand: "Rocephin", dosis: ["1 g", "2 g"] },
-    { name: "Cefalexin", brand: "Keflex", dosis: ["500 mg"] },
-    { name: "Bupropion", brand: "Wellbutrin", dosis: ["100 mg", "200 mg"] },
-    { name: "Lithium", brand: "Lithobid", dosis: ["300 mg"] },
-    { name: "Citalopram", brand: "Celexa", dosis: ["20 mg", "40 mg"] },
-    { name: "Escitalopram", brand: "Lexapro", dosis: ["10 mg", "20 mg"] },
-    { name: "Sildenafil", brand: "Viagra", dosis: ["25 mg", "50 mg", "100 mg"] },
-    { name: "Fentanyl", brand: "Sublimaze", dosis: ["12 mcg/h", "25 mcg/h"] },
-    { name: "Oxycodone", brand: "OxyContin", dosis: ["10 mg", "20 mg", "40 mg"] },
-    { name: "Methadone", brand: "Dolophine", dosis: ["5 mg", "10 mg"] },
-    { name: "Hydromorphone", brand: "Dilaudid", dosis: ["1 mg", "2 mg", "4 mg"] },
-    { name: "Codeine", brand: "Tylenol #3", dosis: ["30 mg", "60 mg"] },
-    { name: "Prednisone", brand: "Deltasone", dosis: ["5 mg", "10 mg", "20 mg"] },
-    { name: "Colchicine", brand: "Colcrys", dosis: ["0.6 mg"] },
-    { name: "Ranitidine", brand: "Zantac", dosis: ["150 mg", "300 mg"] },
-    { name: "Nitroglycerin", brand: "Nitrostat", dosis: ["0.3 mg", "0.6 mg"] },
-    { name: "Propranolol", brand: "Inderal", dosis: ["10 mg", "20 mg", "40 mg"] },
-    { name: "Methotrexate", brand: "Rheumatrex", dosis: ["2.5 mg"] },
-    { name: "Insulin", brand: "Humulin", dosis: ["100 U/ml"] },
-    { name: "Nifedipine", brand: "Procardia", dosis: ["10 mg", "30 mg"] },
-    { name: "Hydrochlorothiazide", brand: "HCTZ", dosis: ["12.5 mg", "25 mg"] },
-    { name: "Ampicillin", brand: "Omnipen", dosis: ["250 mg", "500 mg"] },
-    { name: "Clarithromycin", brand: "Biaxin", dosis: ["250 mg", "500 mg"] },
-    { name: "Carbamazepine", brand: "Tegretol", dosis: ["200 mg"] },
-    { name: "Levothyroxine", brand: "Synthroid", dosis: ["25 mcg", "50 mcg", "100 mcg"] },
-    { name: "Benzonatate", brand: "Tessalon", dosis: ["100 mg"] },
-    { name: "Prochlorperazine", brand: "Compazine", dosis: ["5 mg"] },
-    { name: "Trazodone", brand: "Desyrel", dosis: ["50 mg", "100 mg"] },
-    { name: "Finasteride", brand: "Proscar", dosis: ["5 mg"] },
-    { name: "Verapamil", brand: "Calan", dosis: ["80 mg", "120 mg"] },
-    { name: "Fluconazole", brand: "Diflucan", dosis: ["150 mg"] },
-    { name: "Ondansetron", brand: "Zofran", dosis: ["4 mg", "8 mg"] },
-    { name: "Acyclovir", brand: "Zovirax", dosis: ["200 mg", "400 mg"] },
-    { name: "Ropinirole", brand: "Requip", dosis: ["0.25 mg", "1 mg"] },
-    { name: "Quetiapine", brand: "Seroquel", dosis: ["25 mg", "100 mg"] },
-    { name: "Duloxetine", brand: "Cymbalta", dosis: ["30 mg", "60 mg"] },
-    { name: "Amitriptyline", brand: "Elavil", dosis: ["10 mg", "25 mg"] },
-    { name: "Paliperidone", brand: "Invega", dosis: ["3 mg", "6 mg"] },
-    { name: "Escitalopram", brand: "Lexapro", dosis: ["10 mg", "20 mg"] },
-    // Tambahkan lebih banyak obat sesuai kebutuhan
-];
-
+        { name: "Paracetamol", brand: "Panadol", dosis: ["500 mg", "1 g"] },
+        { name: "Ibuprofen", brand: "Brufen", dosis: ["200 mg", "400 mg"] },
+        { name: "Amoxicillin", brand: "Amoxan", dosis: ["250 mg", "500 mg"] },
+        { name: "Ciprofloxacin", brand: "Cipro", dosis: ["250 mg", "500 mg"] },
+        { name: "Aspirin", brand: "Bayer", dosis: ["100 mg", "500 mg"] },
+        { name: "Metformin", brand: "Glucophage", dosis: ["500 mg", "850 mg", "1000 mg"] },
+        { name: "Lisinopril", brand: "Zestril", dosis: ["10 mg", "20 mg", "40 mg"] },
+        { name: "Simvastatin", brand: "Zocor", dosis: ["5 mg", "10 mg", "20 mg", "40 mg"] },
+        { name: "Cetirizine", brand: "Zyrtec", dosis: ["10 mg"] },
+        { name: "Omeprazole", brand: "Prilosec", dosis: ["20 mg", "40 mg"] },
+        { name: "Hydrochlorothiazide", brand: "HydroDiuril", dosis: ["12.5 mg", "25 mg"] },
+        { name: "Furosemide", brand: "Lasix", dosis: ["20 mg", "40 mg", "80 mg"] },
+        { name: "Levothyroxine", brand: "Synthroid", dosis: ["25 mcg", "50 mcg", "100 mcg"] },
+        { name: "Albuterol", brand: "Ventolin", dosis: ["90 mcg"] },
+        { name: "Fluticasone", brand: "Flonase", dosis: ["50 mcg"] },
+        { name: "Dexamethasone", brand: "Decadron", dosis: ["0.5 mg", "1 mg", "4 mg"] },
+        { name: "Sertraline", brand: "Zoloft", dosis: ["50 mg", "100 mg"] },
+        { name: "Amlodipine", brand: "Norvasc", dosis: ["2.5 mg", "5 mg", "10 mg"] },
+        { name: "Atorvastatin", brand: "Lipitor", dosis: ["10 mg", "20 mg", "40 mg", "80 mg"] },
+        { name: "Warfarin", brand: "Coumadin", dosis: ["1 mg", "5 mg"] },
+        { name: "Clopidogrel", brand: "Plavix", dosis: ["75 mg"] },
+        { name: "Rivaroxaban", brand: "Xarelto", dosis: ["10 mg", "15 mg", "20 mg"] },
+        { name: "Duloxetine", brand: "Cymbalta", dosis: ["30 mg", "60 mg"] },
+        { name: "Tamsulosin", brand: "Flomax", dosis: ["0.4 mg"] },
+        { name: "Metoprolol", brand: "Lopressor", dosis: ["25 mg", "50 mg", "100 mg"] },
+        { name: "Esomeprazole", brand: "Nexium", dosis: ["20 mg", "40 mg"] },
+        { name: "Tramadol", brand: "Ultram", dosis: ["50 mg", "100 mg"] },
+        { name: "Gabapentin", brand: "Neurontin", dosis: ["100 mg", "300 mg", "600 mg"] },
+        { name: "Fluoxetine", brand: "Prozac", dosis: ["20 mg", "40 mg"] },
+        { name: "Lorazepam", brand: "Ativan", dosis: ["0.5 mg", "1 mg", "2 mg"] },
+        { name: "Diazepam", brand: "Valium", dosis: ["2 mg", "5 mg", "10 mg"] },
+        { name: "Amiodarone", brand: "Cordarone", dosis: ["100 mg", "200 mg"] },
+        { name: "Adenosine", brand: "Adenocard", dosis: ["6 mg", "12 mg"] },
+        { name: "Clindamycin", brand: "Cleocin", dosis: ["150 mg", "300 mg"] },
+        { name: "Azithromycin", brand: "Zithromax", dosis: ["250 mg", "500 mg"] },
+        { name: "Vancomycin", brand: "Vancocin", dosis: ["500 mg", "1 g"] },
+        { name: "Metronidazole", brand: "Flagyl", dosis: ["250 mg", "500 mg"] },
+        { name: "Doxycycline", brand: "Vibramycin", dosis: ["100 mg"] },
+        { name: "Ceftriaxone", brand: "Rocephin", dosis: ["1 g", "2 g"] },
+        { name: "Cefalexin", brand: "Keflex", dosis: ["500 mg"] },
+        { name: "Bupropion", brand: "Wellbutrin", dosis: ["100 mg", "200 mg"] },
+        { name: "Lithium", brand: "Lithobid", dosis: ["300 mg"] },
+        { name: "Citalopram", brand: "Celexa", dosis: ["20 mg", "40 mg"] },
+        { name: "Escitalopram", brand: "Lexapro", dosis: ["10 mg", "20 mg"] },
+        { name: "Sildenafil", brand: "Viagra", dosis: ["25 mg", "50 mg", "100 mg"] },
+        { name: "Fentanyl", brand: "Sublimaze", dosis: ["12 mcg/h", "25 mcg/h"] },
+        { name: "Oxycodone", brand: "OxyContin", dosis: ["10 mg", "20 mg", "40 mg"] },
+        { name: "Methadone", brand: "Dolophine", dosis: ["5 mg", "10 mg"] },
+        { name: "Hydromorphone", brand: "Dilaudid", dosis: ["1 mg", "2 mg", "4 mg"] },
+        { name: "Codeine", brand: "Tylenol #3", dosis: ["30 mg", "60 mg"] },
+        { name: "Prednisone", brand: "Deltasone", dosis: ["5 mg", "10 mg", "20 mg"] },
+        { name: "Colchicine", brand: "Colcrys", dosis: ["0.6 mg"] },
+        { name: "Ranitidine", brand: "Zantac", dosis: ["150 mg", "300 mg"] },
+        { name: "Nitroglycerin", brand: "Nitrostat", dosis: ["0.3 mg", "0.6 mg"] },
+        { name: "Propranolol", brand: "Inderal", dosis: ["10 mg", "20 mg", "40 mg"] },
+        { name: "Methotrexate", brand: "Rheumatrex", dosis: ["2.5 mg"] },
+        { name: "Insulin", brand: "Humulin", dosis: ["100 U/ml"] },
+        { name: "Nifedipine", brand: "Procardia", dosis: ["10 mg", "30 mg"] },
+        { name: "Hydrochlorothiazide", brand: "HCTZ", dosis: ["12.5 mg", "25 mg"] },
+        { name: "Ampicillin", brand: "Omnipen", dosis: ["250 mg", "500 mg"] },
+        { name: "Clarithromycin", brand: "Biaxin", dosis: ["250 mg", "500 mg"] },
+        { name: "Carbamazepine", brand: "Tegretol", dosis: ["200 mg"] },
+        { name: "Levothyroxine", brand: "Synthroid", dosis: ["25 mcg", "50 mcg", "100 mcg"] },
+        { name: "Benzonatate", brand: "Tessalon", dosis: ["100 mg"] },
+        { name: "Prochlorperazine", brand: "Compazine", dosis: ["5 mg"] },
+        { name: "Trazodone", brand: "Desyrel", dosis: ["50 mg", "100 mg"] },
+        { name: "Finasteride", brand: "Proscar", dosis: ["5 mg"] },
+        { name: "Verapamil", brand: "Calan", dosis: ["80 mg", "120 mg"] },
+        { name: "Fluconazole", brand: "Diflucan", dosis: ["150 mg"] },
+        { name: "Ondansetron", brand: "Zofran", dosis: ["4 mg", "8 mg"] },
+        { name: "Acyclovir", brand: "Zovirax", dosis: ["200 mg", "400 mg"] },
+        { name: "Ropinirole", brand: "Requip", dosis: ["0.25 mg", "1 mg"] },
+        { name: "Quetiapine", brand: "Seroquel", dosis: ["25 mg", "100 mg"] },
+        { name: "Duloxetine", brand: "Cymbalta", dosis: ["30 mg", "60 mg"] },
+        { name: "Amitriptyline", brand: "Elavil", dosis: ["10 mg", "25 mg"] },
+        { name: "Paliperidone", brand: "Invega", dosis: ["3 mg", "6 mg"] },
+        { name: "Escitalopram", brand: "Lexapro", dosis: ["10 mg", "20 mg"] },
     ];
 
     function searchObat() {
         const query = document.getElementById('obatSearch').value.toLowerCase();
-        const obatListElement = document.getElementById('obatList');
-        obatListElement.innerHTML = '';
+        const obatList = document.getElementById('obatList');
+        obatList.innerHTML = '';
 
-        const filteredObat = daftarObat.filter(obat => obat.name.toLowerCase().includes(query));
-        filteredObat.forEach(obat => {
-            const li = document.createElement('li');
-            li.className = 'list-group-item';
-            li.textContent = `${obat.name} (${obat.brand})`;
-            li.onclick = () => selectObat(obat);
-            obatListElement.appendChild(li);
+        daftarObat.forEach(obat => {
+            if (obat.name.toLowerCase().includes(query)) {
+                const li = document.createElement('li');
+                li.className = 'list-group-item list-group-item-action';
+                li.textContent = `${obat.name} (${obat.brand})`;
+                li.onclick = () => selectObat(obat);
+                obatList.appendChild(li);
+            }
         });
     }
 
     function selectObat(obat) {
-        document.getElementById('obatSearch').value = obat.name;
-        document.getElementById('dosis').innerHTML = '';
-        obat.dosis.forEach(dosis => {
+        document.getElementById('obatSearch').value = obat.name + ' (' + obat.brand + ')';
+        const dosisSelect = document.getElementById('dosis');
+        dosisSelect.innerHTML = '<option value="">Pilih Dosis</option>';
+        obat.dosis.forEach(d => {
             const option = document.createElement('option');
-            option.value = dosis;
-            option.textContent = dosis;
-            document.getElementById('dosis').appendChild(option);
+            option.value = d;
+            option.textContent = d;
+            dosisSelect.appendChild(option);
         });
-        document.getElementById('dosis').disabled = false;
-        document.getElementById('obatList').innerHTML = '';
+        dosisSelect.disabled = false;
     }
 
     function renderPasienTable() {
         const pasienTableBody = document.getElementById('pasienTable').getElementsByTagName('tbody')[0];
         pasienTableBody.innerHTML = '';
+
         for (const nama in rekamMedisData) {
             const pasien = rekamMedisData[nama];
-            const newRow = pasienTableBody.insertRow();
-            newRow.insertCell(0).innerText = pasien.nama;
-            newRow.insertCell(1).innerText = pasien.umur;
-            newRow.insertCell(2).innerText = pasien.jenisKelamin;
-            const actionCell = newRow.insertCell(3);
-            actionCell.innerHTML = `<button class="btn btn-info" onclick="showKunjungan('${nama}')">Lihat Kunjungan</button>`;
+            const row = pasienTableBody.insertRow();
+            row.insertCell(0).innerText = pasien.nama;
+            row.insertCell(1).innerText = pasien.umur;
+            row.insertCell(2).innerText = pasien.jenisKelamin;
+            row.insertCell(3).innerHTML = `<button class="btn btn-info btn-sm" onclick="showKunjungan('${nama}')">Lihat Riwayat</button>`;
         }
-    }
-
-    function showKunjungan(nama) {
-        const kunjunganTableBody = document.getElementById('kunjunganTable').getElementsByTagName('tbody')[0];
-        kunjunganTableBody.innerHTML = '';
-
-        const kunjunganList = rekamMedisData[nama].kunjungan;
-        kunjunganList.forEach((kunjungan, index) => {
-            const newRow = kunjunganTableBody.insertRow();
-            newRow.insertCell(0).innerText = kunjungan.tanggal;
-            newRow.insertCell(1).innerText = kunjungan.keluhan; // Menampilkan keluhan
-            newRow.insertCell(2).innerText = kunjungan.diagnosis;
-            newRow.insertCell(3).innerText = kunjungan.obat.join(', ');
-            newRow.insertCell(4).innerText = kunjungan.dosis.join(', ');
-            const actionCell = newRow.insertCell(5);
-            actionCell.innerHTML = `
-                <button class="btn btn-warning" onclick="editKunjungan('${nama}', ${index})">Edit</button>
-                <button class="btn btn-danger" onclick="hapusKunjungan('${nama}', ${index})">Hapus</button>
-            `;
-        });
     }
 
     function tambahRekamMedis() {
         const nama = document.getElementById('nama').value;
         const umur = document.getElementById('umur').value;
-        const jenisKelamin = document.getElementById('jenisKelamin').value;
-        const keluhan = document.getElementById('keluhan').value;
-        const diagnosis = document.getElementById('diagnosis').value;
-        const pemeriksaanPenunjang = document.getElementById('pemeriksaanPenunjang').value;
-        const alergi = document.getElementById('alergi').value;
-        const catatanDokter = document.getElementById('catatanDokter').value;
-        const tanggal = document.getElementById('tanggal').value;
-        const obat = [document.getElementById('obatSearch').value];
-        const dosis = [document.getElementById('dosis').value];
+        const jenisKelamin = document.querySelector('input[name="jenisKelamin"]:checked').value;
+        rekamMedisData[nama] = { nama, umur, jenisKelamin };
+        renderPasienTable();
+        $('#modalTambahPasien').modal('hide');
+    }
 
-        if (!rekamMedisData[nama]) {
-            rekamMedisData[nama] = {
-                nama,
-                umur,
-                jenisKelamin,
-                kunjungan: []
-            };
+    function showKunjungan(nama) {
+        const kunjunganList = document.getElementById('kunjunganList');
+        kunjunganList.innerHTML = '';
+        const pasien = rekamMedisData[nama];
+
+        if (pasien.kunjungan) {
+            pasien.kunjungan.forEach(kunjungan => {
+                const li = document.createElement('li');
+                li.textContent = `${kunjungan.tanggal}: ${kunjungan.obat} (${kunjungan.dosis})`;
+                kunjunganList.appendChild(li);
+            });
+        } else {
+            kunjunganList.innerHTML = '<li class="list-group-item">Belum ada kunjungan</li>';
         }
 
-        rekamMedisData[nama].kunjungan.push({
-            tanggal,
-            keluhan, // Menyimpan keluhan
-            diagnosis,
-            obat,
-            dosis
-        });
-
-        localStorage.setItem('rekamMedisData', JSON.stringify(rekamMedisData));
-        renderPasienTable();
-        document.getElementById('rekamMedisForm').reset();
-        document.getElementById('obatList').innerHTML = '';
-        document.getElementById('dosis').value = '';
-        document.getElementById('dosis').disabled = true;
+        $('#modalKunjungan').modal('show');
     }
 
-    function editKunjungan(nama, index) {
-        const kunjungan = rekamMedisData[nama].kunjungan[index];
-        document.getElementById('nama').value = nama;
-        document.getElementById('umur').value = rekamMedisData[nama].umur;
-        document.getElementById('jenisKelamin').value = rekamMedisData[nama].jenisKelamin;
-        document.getElementById('keluhan').value = kunjungan.keluhan; // Menampilkan keluhan
-        document.getElementById('diagnosis').value = kunjungan.diagnosis;
-        document.getElementById('pemeriksaanPenunjang').value = ''; // Kosongkan jika diperlukan
-        document.getElementById('alergi').value = ''; // Kosongkan jika diperlukan
-        document.getElementById('catatanDokter').value = ''; // Kosongkan jika diperlukan
-        document.getElementById('tanggal').value = kunjungan.tanggal;
-        document.getElementById('obatSearch').value = kunjungan.obat.join(', ');
-        document.getElementById('dosis').value = kunjungan.dosis.join(', ');
+    function tambahKunjungan() {
+        const nama = document.getElementById('obatSearch').value.split(' (')[0]; // ambil nama obat
+        const dosis = document.getElementById('dosis').value;
+        const tanggal = new Date().toLocaleDateString();
+
+        if (!rekamMedisData[nama].kunjungan) {
+            rekamMedisData[nama].kunjungan = [];
+        }
+
+        rekamMedisData[nama].kunjungan.push({ tanggal, obat: document.getElementById('obatSearch').value, dosis });
+        $('#modalKunjungan').modal('hide');
     }
 
-    function hapusKunjungan(nama, index) {
-        rekamMedisData[nama].kunjungan.splice(index, 1);
-        localStorage.setItem('rekamMedisData', JSON.stringify(rekamMedisData));
-        showKunjungan(nama);
-    }
-
+    document.getElementById('obatSearch').addEventListener('input', searchObat);
+    document.getElementById('tambahPasienButton').addEventListener('click', tambahRekamMedis);
+    document.getElementById('tambahKunjunganButton').addEventListener('click', tambahKunjungan);
     renderPasienTable();
 </script>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
