@@ -57,6 +57,11 @@
     
     <form id="rekamMedisForm" class="mb-4">
         <div class="form-group">
+            <label for="nomorRekamMedis">Nomor Rekam Medis:</label>
+            <input type="text" id="nomorRekamMedis" name="nomorRekamMedis" class="form-control" required>
+        </div>
+
+        <div class="form-group">
             <label for="nama">Nama Pasien:</label>
             <input type="text" id="nama" name="nama" class="form-control" required>
         </div>
@@ -109,15 +114,7 @@
             <label for="dosis">Dosis Obat:</label>
             <select id="dosis" class="form-control" disabled>
                 <option value="">Pilih Dosis</option>
-                <option value="500 mg">500 mg</option>
-                <option value="1 g">1 g</option>
-                <option value="10 mg">10 mg</option>
-                <option value="250 mg">250 mg</option>
-                <option value="5 mg">5 mg</option>
-                <option value="50 mg">50 mg</option>
-                <option value="100 mg">100 mg</option>
-                <option value="200 mg">200 mg</option>
-                <!-- Dosis lain bisa ditambahkan di sini -->
+                <!-- Dosis obat akan diisi melalui JavaScript -->
             </select>
         </div>
 
@@ -130,6 +127,7 @@
     <table class="table table-striped" id="rekamMedisTable">
         <thead>
             <tr>
+                <th>Nomor Rekam Medis</th>
                 <th>Nama Pasien</th>
                 <th>Umur</th>
                 <th>Jenis Kelamin</th>
@@ -157,52 +155,11 @@
 <script>
     const rekamMedisData = JSON.parse(localStorage.getItem('rekamMedisData')) || [];
     const daftarObat = [
-        { name: "Paracetamol", brand: "Panadol" },
-        { name: "Ibuprofen", brand: "Brufen" },
-        { name: "Amoxicillin", brand: "Amoxan" },
-        { name: "Ciprofloxacin", brand: "Cipro" },
-        { name: "Azithromycin", brand: "Zithromax" },
-        { name: "Doxycycline", brand: "Vibramycin" },
-        { name: "Metronidazole", brand: "Flagyl" },
-        { name: "Fluoxetine", brand: "Prozac" },
-        { name: "Sertraline", brand: "Zoloft" },
-        { name: "Amoxicillin/Clavulanate", brand: "Augmentin" },
-        { name: "Moxifloxacin", brand: "Avelox" },
-        { name: "Levofloxacin", brand: "Levaquin" },
-        { name: "Simvastatin", brand: "Zocor" },
-        { name: "Amlodipine", brand: "Amlodin" },
-        { name: "Lisinopril", brand: "Lisinopril" },
-        { name: "Omeprazole", brand: "Losec" },
-        { name: "Quetiapine", brand: "Seroquel" },
-        { name: "Lithium", brand: "Lithobid" },
-        { name: "Citalopram", brand: "Celexa" },
-        { name: "Escitalopram", brand: "Lexapro" },
-        { name: "Metformin", brand: "Glucophage" },
-        { name: "Atorvastatin", brand: "Lipitor" },
-        { name: "Gliclazide", brand: "Diamicron" },
-        { name: "Furosemide", brand: "Lasix" },
-        { name: "Hydrochlorothiazide", brand: "Hydrodiuril" },
-        { name: "Sildenafil", brand: "Viagra" },
-        { name: "Tamsulosin", brand: "Flomax" },
-        { name: "Duloxetine", brand: "Cymbalta" },
-        { name: "Amitriptyline", brand: "Elavil" },
-        { name: "Clonazepam", brand: "Klonopin" },
-        { name: "Diazepam", brand: "Valium" },
-        { name: "Lorazepam", brand: "Ativan" },
-        { name: "Clopidogrel", brand: "Plavix" },
-        { name: "Warfarin", brand: "Coumadin" },
-        { name: "Enoxaparin", brand: "Lovenox" },
-        { name: "Rivaroxaban", brand: "Xarelto" },
-        { name: "Dexamethasone", brand: "Decadron" },
-        { name: "Prednisone", brand: "Deltasone" },
-        { name: "Hydrocodone", brand: "Vicodin" },
-        { name: "Oxycodone", brand: "OxyContin" },
-        { name: "Tramadol", brand: "Ultram" },
-        { name: "Codeine", brand: "Tylenol #3" },
-        { name: "Cetirizine", brand: "Zyrtec" },
-        { name: "Diphenhydramine", brand: "Benadryl" },
-        { name: "Loratadine", brand: "Claritin" },
-        // Tambahkan lebih banyak obat di sini sesuai kebutuhan
+        { name: "Paracetamol", brand: "Panadol", dosis: ["500 mg", "1 g"] },
+        { name: "Ibuprofen", brand: "Brufen", dosis: ["200 mg", "400 mg"] },
+        { name: "Amoxicillin", brand: "Amoxan", dosis: ["250 mg", "500 mg"] },
+        { name: "Ciprofloxacin", brand: "Cipro", dosis: ["250 mg", "500 mg"] },
+        // Tambahkan lebih banyak obat dengan dosisnya di sini
     ];
 
     function searchObat() {
@@ -215,14 +172,22 @@
             const li = document.createElement('li');
             li.className = 'list-group-item';
             li.textContent = `${obat.name} (${obat.brand})`;
-            li.onclick = () => selectObat(obat.name);
+            li.onclick = () => selectObat(obat);
             obatListElement.appendChild(li);
         });
     }
 
-    function selectObat(obatName) {
-        document.getElementById('obatSearch').value = obatName;
-        document.getElementById('dosis').disabled = false;
+    function selectObat(obat) {
+        document.getElementById('obatSearch').value = obat.name;
+        const dosisSelect = document.getElementById('dosis');
+        dosisSelect.innerHTML = '<option value="">Pilih Dosis</option>';
+        obat.dosis.forEach(d => {
+            const option = document.createElement('option');
+            option.value = d;
+            option.textContent = d;
+            dosisSelect.appendChild(option);
+        });
+        dosisSelect.disabled = false;
         document.getElementById('obatList').innerHTML = '';
     }
 
@@ -231,22 +196,25 @@
         Body.innerHTML = '';
         rekamMedisData.forEach((data, index) => {
             const newRow = Body.insertRow();
-            newRow.insertCell(0).innerText = data.nama;
-            newRow.insertCell(1).innerText = data.umur;
-            newRow.insertCell(2).innerText = data.jenisKelamin;
-            newRow.insertCell(3).innerText = data.tanggal;
-            newRow.insertCell(4).innerText = data.diagnosis;
-            newRow.insertCell(5).innerText = data.pemeriksaanPenunjang || 'Tidak Ada';
-            newRow.insertCell(6).innerText = data.alergi || 'Tidak Ada';
-            newRow.insertCell(7).innerText = data.catatanDokter || 'Tidak Ada';
-            newRow.insertCell(8).innerText = data.obat.join(', ') || 'Tidak Ada';
-            newRow.insertCell(9).innerText = data.dosis.join(', ') || 'Tidak Ada';
-            const editCell = newRow.insertCell(10);
-            editCell.innerHTML = `<button class="btn btn-warning" onclick="editRekamMedis(${index})">Edit</button>`;
+            newRow.insertCell(0).innerText = data.nomorRekamMedis;
+            newRow.insertCell(1).innerText = data.nama;
+            newRow.insertCell(2).innerText = data.umur;
+            newRow.insertCell(3).innerText = data.jenisKelamin;
+            newRow.insertCell(4).innerText = data.tanggal;
+            newRow.insertCell(5).innerText = data.diagnosis;
+            newRow.insertCell(6).innerText = data.pemeriksaanPenunjang || 'Tidak Ada';
+            newRow.insertCell(7).innerText = data.alergi || 'Tidak Ada';
+            newRow.insertCell(8).innerText = data.catatanDokter || 'Tidak Ada';
+            newRow.insertCell(9).innerText = data.obat.join(', ') || 'Tidak Ada';
+            newRow.insertCell(10).innerText = data.dosis.join(', ') || 'Tidak Ada';
+            const aksiCell = newRow.insertCell(11);
+            aksiCell.innerHTML = `<button class="btn btn-warning" onclick="editRekamMedis(${index})">Edit</button> 
+                                  <button class="btn btn-danger" onclick="hapusRekamMedis(${index})">Hapus</button>`;
         });
     }
 
     function tambahRekamMedis() {
+        const nomorRekamMedis = document.getElementById('nomorRekamMedis').value;
         const nama = document.getElementById('nama').value;
         const umur = document.getElementById('umur').value;
         const jenisKelamin = document.getElementById('jenisKelamin').value;
@@ -258,7 +226,7 @@
         const obat = [document.getElementById('obatSearch').value];
         const dosis = [document.getElementById('dosis').value];
 
-        const newRecord = { nama, umur, jenisKelamin, diagnosis, pemeriksaanPenunjang, alergi, catatanDokter, tanggal, obat, dosis };
+        const newRecord = { nomorRekamMedis, nama, umur, jenisKelamin, diagnosis, pemeriksaanPenunjang, alergi, catatanDokter, tanggal, obat, dosis };
         rekamMedisData.push(newRecord);
         localStorage.setItem('rekamMedisData', JSON.stringify(rekamMedisData));
         renderTable();
@@ -270,6 +238,7 @@
 
     function editRekamMedis(index) {
         const data = rekamMedisData[index];
+        document.getElementById('nomorRekamMedis').value = data.nomorRekamMedis;
         document.getElementById('nama').value = data.nama;
         document.getElementById('umur').value = data.umur;
         document.getElementById('jenisKelamin').value = data.jenisKelamin;
@@ -285,6 +254,13 @@
 
         const dosis = data.dosis.join(', ');
         document.getElementById('dosis').value = dosis;
+        selectObat(data.obat[0]);  // Mengisi dosis berdasarkan obat yang dipilih
+    }
+
+    function hapusRekamMedis(index) {
+        rekamMedisData.splice(index, 1);
+        localStorage.setItem('rekamMedisData', JSON.stringify(rekamMedisData));
+        renderTable();
     }
 
     renderTable();
